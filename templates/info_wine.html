@@ -11,11 +11,12 @@
 </div>
 <div class="tags">
   <h4>Tags</h4>
-  {{#tags}}
-  <p> {{tag}} </p>
-  {{/tags}}
+  {{#tag_arr}}
+  <p><a href="/tags/{{.}}"> {{.}} </a></p>
+  {{/tag_arr}}
 </div>
 <div class="body">
+  <h4>Description</h4>
   <p class="description">{{description}}</p>
 </div>
 <!-- add reviews in code -->

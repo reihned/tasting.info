@@ -3,6 +3,8 @@ require 'sinatra'
 require 'mustache'
 require 'json'
 
+require 'pry'
+
 require './lib/classes.rb'
 require './lib/connection.rb'
 require './lib/functions.rb'
@@ -10,6 +12,10 @@ require './lib/functions.rb'
 get '/' do
   #featured wine
   #latest ten
+  wines_latest = Wine.limit(5).order("id DESC")
+  template_feed_wine = File.read('./templates/feed_wines.html')
+  content = Mustache.render(template_feed_wine, wines_latest)
+  render_full(content)
 end
 
 # wines
@@ -28,11 +34,14 @@ get '/wines/new' do
   template_form_wine = File.read('./templates/add_wine.html')
   path = '/wines/new'
   render_form_wine = Mustache.render( template_form_wine, {path: path} )
+
+  render_full(render_form_wine)
 end
 
 post '/wines/new' do
   description = params[:description]
   snippet = description[0..135] + "..."
+
   wine = Wine.create(
     name:         params[:name],
     maker:        params[:maker],
@@ -41,6 +50,12 @@ post '/wines/new' do
     description:  params[:description],
     snippet:      snippet,
   ) # create
+
+  maker = Maker.find_by(name: wine.maker)
+
+  if maker == nil
+    maker_new = Maker.create( name: wine.maker )
+  end
 
   redirect "/wines/#{wine.w_id}", 303, "Success!"
 end
@@ -52,6 +67,18 @@ post '/wines/edit/:w_id' do
 end
 
 get '/wines/:w_id' do
+  w_id = params[:w_id]
+  wine_info = Wine.find_by(w_id: w_id)
+  maker_info = Maker.find_by(name: wine_info.maker)
+  tag_arr = wine_info.tags.split(" ")
+
+  info = wine_info.as_json
+  info[:maker_url] = maker_info.website_url
+  info[:tag_arr] = tag_arr
+
+  template_info = File.read('./templates/info_wine.html')
+  content = Mustache.render( template_info, info )
+  render_full(content)
 end
 
 # reviews
@@ -83,11 +110,5 @@ end
 get '/tags' do
 end
 
-get '/tags/:t_id' do
-end
-
-get '/tags/new' do
-end
-
-post '/tags/new' do
+get '/tags/:tag' do
 end
