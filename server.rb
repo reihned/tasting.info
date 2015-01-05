@@ -3,8 +3,6 @@ require 'sinatra'
 require 'mustache'
 require 'json'
 
-require 'pry'
-
 require './lib/classes.rb'
 require './lib/connection.rb'
 require './lib/functions.rb'
@@ -153,7 +151,7 @@ get '/wines/:w_id' do
 
   #review feed
   template_reviews = File.read('./templates/feed_reviews.html')
-  reviews_raw = Review.find_by(w_id: w_id)
+  reviews_raw = Review.where(w_id: w_id)
   reviews = {reviews: reviews_raw.as_json}
   reviews_html = Mustache.render(template_reviews, reviews)
 
@@ -170,33 +168,133 @@ end
 
 # reviews
 post '/wines/review' do
-  
+  review = Review.create(
+    w_id:   params["w_id"],
+    review: params["review"]
+  )#create
+
+  redirect "/wines/#{params["w_id"]}", 303, "Success!"
 end
 
 # makers
 
 get '/makers' do
+  line_new_maker = "<div class='new'><a href='/makers/new'>Add New Maker</a></div>"
+  template_feed_maker = File.read('./templates/feed_makers.html')
+  all_makers_raw = Maker.all
+  all_makers = { makers: all_makers_raw.as_json }
+  render_feed_maker = Mustache.render( template_feed_maker, all_makers )
+  content_all = line_new_maker + render_feed_maker
+  render_full(content_all)
 end
 
 get '/makers/new' do
+  template_form = File.read('./templates/add_makers.html')
+  path = '/makers/new'
+  render_form_wine = Mustache.render( template_form, {path: path} )
+
+  render_full(render_form)
 end
 
 post '/makers/new' do
+  description = params[:description]
+  snippet = description[0..135] + "..."
+
+  wine = Wine.create(
+    name:         params[:name],
+    region:       params[:region],
+    img_url:      params[:img_url],
+    website_url:  params[:website_url],
+    about:        params[:about],
+    snippet:      snippet
+  ) # create
 end
 
 get '/makers/edit/m_id:' do
+  m_id = params[:m_id]
+  maker = Wine.find_by(m_id: m_id)
+  path = "/makers/edit/#{m_id}"
+
+  maker_info = maker.as_json
+
+  maker_info["path"] = path
+
+  template_edit = File.read("./templates/edit_maker.html")
+  rendered_form = Mustache.render(template_edit, maker_info)
+
+  render_full(rendered_form)
 end
 
 post '/wines/edit/m_id:' do
+  m_id = params[:m_id]
+  maker = Maker.find_by(m_id: m_id)
+
+  description = params[:description]
+  snippet = description[0..135] + "..."
+
+  maker.update(
+    name:         params[:name],
+    region:       params[:region],
+    img_url:      params[:img_url],
+    website_url:  params[:website_url],
+    about:        params[:about],
+    snippet:      snippet
+  ) # update
+
+  maker.save
+
+  redirect "/makers/#{m_id}", 303, "Success!"
 end
 
 get '/makers/:m_id' do
+  m_id = params[:m_id]
+  maker_info = Maker.find_by(m_id: m_id)
+
+  info = maker_info.as_json
+
+  template_info = File.read('./templates/info_maker.html')
+  content = Mustache.render( template_info, info )
+
+  #edit link
+
+  edit_link = "<div class='edit_button' ><a href='/wines/edit/#{m_id}'>EDIT<a><div> "
+  content += edit_link
+
+  #filtered wine feed
+  template_feed_wine = File.read('./templates/feed_wines.html')
+  wines_raw = Wine.where(maker: maker_info.name)
+  wines = { wines: wines_raw.as_json }
+  render_feed_wine = Mustache.render( template_feed_wine, wines )
+
+  content += render_feed_wine
+
+  render_full(content)
 end
 
 # tags
 
 get '/tags' do
+  # display all tags
+  template_feed = File.read('./templates/feed_tags.html')
+  tags_raw = Tag.all
+  tags = {tags: tags_raw.as_json}
+  feed_tags = Mustache.render(template_feed, tags)
+
+  render_full(feed_tags)
 end
 
-get '/tags/:tag' do
+get '/tags/:t_id' do
+  # display the tag
+  tag = Tag.find_by(t_id: params[:t_id])
+  template_info = File.read('./templates/info_tag.html')
+  tag_info = Mustache.render( template_info, tag.as_json )
+
+  # display all wines related to the tag
+  wines_raw = Wine.where('tags LIKE ?', "%#{tag.tag}%").all
+  template_feed_wine = File.read('./templates/feed_wines.html')
+  wines = { wines: wines_raw.as_json }
+  wines_by_tag = Mustache.render( template_feed_wine, wines )
+
+
+  content = tag_info + wines_by_tag
 end
