@@ -1,0 +1,21 @@
+<div class="title">
+  <h2>{{maker}}, {{name}} {{year}}</h2>
+</div>
+<div class="image">
+  <img src="{{img_url}}" />
+</div>
+<div class="info">
+  <p>Name: {{name}}</p>
+  <p>Year: {{year}}</p>
+  <p>Maker: <a class="sublink" href="{{maker_url}}">{{maker}}</a></p>
+</div>
+<div class="tags">
+  <h4>Tags</h4>
+  {{#tags}}
+  <p> {{tag}} </p>
+  {{/tags}}
+</div>
+<div class="body">
+  <p class="description">{{description}}</p>
+</div>
+<!-- twitter integration to be added -->
