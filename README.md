@@ -2,6 +2,10 @@ tastings.info
 A website for posting wines, makers, and reviews.
 
 GEMS
+gem 'activerecord'
+gem 'sinatra'
+gem 'mustache'
+gem 'pg'
 
 INSTRUCTIONS
 
