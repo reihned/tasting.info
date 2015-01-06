@@ -338,6 +338,35 @@ get '/tags/:tag' do
   render_full(content)
 end
 
+# delete
+post '/delete' do
+  type = params["type"]
+  id = params["id"]
+  path = '/'
+
+  case type
+  when "wine"
+    delete_this = Wine.find_by( w_id: id )
+    delete_this.destroy
+    path = '/wines'
+    message = 'Success'
+  when "maker"
+    delete_this = Maker.find_by( m_id: id )
+    delete_this.destroy
+    path = '/makers'
+    message = 'Success'
+  when "tag"
+    delete_this = Tag.find_by( t_id: id )
+    delete_this.destroy
+    path = '/tags'
+    message = 'Success'
+  else
+    message = "Error"
+  end
+  redirect path, 303, message
+end
+
+
 # subscribe
 
 post '/subscribe' do
