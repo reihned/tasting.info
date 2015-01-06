@@ -1,10 +1,12 @@
 <div class="feed">
   {{#wines}}
   <a href="/wines/{{w_id}}">
-    <div class="snippet">
-      <img src="{{img_url}}" />
-      <p class="title">{{maker}}, {{name}} {{year}}</p>
-      <p class="body">{{snippet}}</p>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <img src="{{img_url}}" />
+        <p class="title">{{maker}}, {{name}} {{year}}</p>
+        <p class="body">{{snippet}}</p>
+      </div>
     </div>
   </a>
   {{/wines}}

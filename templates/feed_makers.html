@@ -1,11 +1,14 @@
 <div class="feed">
   {{#makers}}
   <a href="/makers/{{m_id}}">
-    <div class="snippet">
-      <img src="{{img_url}}" />
-      <p class="title">{{name}}, {{region}}</p>
-      <p class="body">{{snippet}}</p>
+    <div class="panel panel-default">
+      <div class="panel-body">
+        <img src="{{img_url}}" />
+        <p class="title">{{name}}, {{region}}</p>
+        <p class="body">{{snippet}}</p>
+      </div>
     </div>
   </a>
   {{/makers}}
 </div>
+ 
