@@ -12,10 +12,7 @@ end
 
 class Review < ActiveRecord::Base
 end
-
-class Tagref < ActiveRecord::Base
-end
-
-class Application < Sinatra::Base
-  use ActiveRecord::ConnectionAdapters::ConnectionManagement
-end
+# 
+# class Application < Sinatra::Base
+#   use ActiveRecord::ConnectionAdapters::ConnectionManagement
+# end

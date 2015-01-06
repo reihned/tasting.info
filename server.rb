@@ -7,6 +7,10 @@ require './lib/classes.rb'
 require './lib/connection.rb'
 require './lib/functions.rb'
 
+after do
+  ActiveRecord::Base.connection.close
+end
+
 get '/' do
   #featured wine
   #latest ten
@@ -189,18 +193,18 @@ get '/makers' do
 end
 
 get '/makers/new' do
-  template_form = File.read('./templates/add_makers.html')
+  template_form = File.read('./templates/add_maker.html')
   path = '/makers/new'
-  render_form_wine = Mustache.render( template_form, {path: path} )
+  render_form = Mustache.render( template_form, {path: path} )
 
   render_full(render_form)
 end
 
 post '/makers/new' do
-  description = params[:description]
-  snippet = description[0..135] + "..."
+  about = params[:description]
+  snippet = about[0..135] + "..."
 
-  wine = Wine.create(
+  maker = Maker.create(
     name:         params[:name],
     region:       params[:region],
     img_url:      params[:img_url],
@@ -210,9 +214,9 @@ post '/makers/new' do
   ) # create
 end
 
-get '/makers/edit/m_id:' do
+get '/makers/edit/:m_id' do
   m_id = params[:m_id]
-  maker = Wine.find_by(m_id: m_id)
+  maker = Maker.find_by(m_id: m_id)
   path = "/makers/edit/#{m_id}"
 
   maker_info = maker.as_json
@@ -225,12 +229,12 @@ get '/makers/edit/m_id:' do
   render_full(rendered_form)
 end
 
-post '/wines/edit/m_id:' do
+post '/makers/edit/:m_id' do
   m_id = params[:m_id]
   maker = Maker.find_by(m_id: m_id)
 
-  description = params[:description]
-  snippet = description[0..135] + "..."
+  about = params[:about]
+  snippet = about[0..135] + "..."
 
   maker.update(
     name:         params[:name],
@@ -257,7 +261,7 @@ get '/makers/:m_id' do
 
   #edit link
 
-  edit_link = "<div class='edit_button' ><a href='/wines/edit/#{m_id}'>EDIT<a><div> "
+  edit_link = "<div class='edit_button' ><a href='/makers/edit/#{m_id}'>EDIT<a><div> "
   content += edit_link
 
   #filtered wine feed
@@ -283,14 +287,14 @@ get '/tags' do
   render_full(feed_tags)
 end
 
-get '/tags/:t_id' do
+get '/tags/:tag' do
   # display the tag
-  tag = Tag.find_by(t_id: params[:t_id])
+  tag_raw = Tag.find_by(tag: params[:tag])
   template_info = File.read('./templates/info_tag.html')
-  tag_info = Mustache.render( template_info, tag.as_json )
+  tag_info = Mustache.render( template_info, tag_raw.as_json )
 
   # display all wines related to the tag
-  wines_raw = Wine.where('tags LIKE ?', "%#{tag.tag}%").all
+  wines_raw = Wine.where('tags LIKE ?', "%#{tag_raw.tag}%").all
   template_feed_wine = File.read('./templates/feed_wines.html')
   wines = { wines: wines_raw.as_json }
   wines_by_tag = Mustache.render( template_feed_wine, wines )
