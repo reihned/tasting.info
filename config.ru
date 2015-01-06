@@ -1,2 +1,2 @@
-require './anagram_server.rb'
+require './server.rb'
 run Sinatra::Application
