@@ -234,7 +234,7 @@ get '/makers/new' do
 end
 
 post '/makers/new' do
-  about = params[:description]
+  about = params[:about]
   snippet = about[0..135] + "..."
 
   maker = Maker.create(
