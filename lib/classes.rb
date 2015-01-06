@@ -1,5 +1,5 @@
 require 'active_record'
-require 'sinatra'
+# require 'sinatra'
 
 class Wine < ActiveRecord::Base
 end
@@ -12,7 +12,11 @@ end
 
 class Review < ActiveRecord::Base
 end
-# 
+
+class Subscriber < ActiveRecord::Base
+end
+
+#
 # class Application < Sinatra::Base
 #   use ActiveRecord::ConnectionAdapters::ConnectionManagement
 # end

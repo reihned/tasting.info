@@ -6,6 +6,7 @@ gem 'activerecord'
 gem 'sinatra'
 gem 'mustache'
 gem 'pg'
+gem 'sendgrid-ruby'
 
 INSTRUCTIONS
 

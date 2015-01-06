@@ -2,6 +2,7 @@ require 'active_record'
 require 'sinatra'
 require 'mustache'
 require 'json'
+require 'sendgrid-ruby'
 
 require './lib/classes.rb'
 require './lib/connection.rb'
@@ -19,6 +20,11 @@ get '/' do
 
   template_feed_wine = File.read('./templates/feed_wines.html')
   content = Mustache.render(template_feed_wine, wines_latest)
+
+  #add a subscription option
+  subscribe = File.read('./templates/subscribe.html')
+  content += subscribe
+
   render_full(content)
 end
 
@@ -71,6 +77,33 @@ post '/wines/new' do
   tag_arr.each do |tag|
     if Tag.find_by(tag: tag) == nil
       new_tag = Tag.create( tag: tag )
+    end
+  end
+
+  #update subscribers about a new wine
+  subscribers = Subscriber.all
+
+  if !(subscribers.empty?)
+    maker_info = Maker.find_by(name: wine.maker)
+    tag_arr = wine.tags.split(" ")
+
+    info = wine.as_json
+    # info[:maker_url] = maker_info.website_url
+    info[:maker_url] = "/makers/#{maker_info.m_id}"
+    info[:tag_arr] = tag_arr
+
+    template_info = File.read('./templates/info_wine.html')
+    content = Mustache.render( template_info, info )
+    wine_info_html = render_full(content)
+
+    subscribers.each do |subscriber|
+      client.send(SendGrid::Mail.new(
+        to: subscriber.email,
+        from: 'no-reply@tastings.info',
+        subject: "#{wine.maker} #{wine.name} #{wine.year} - tastings.info",
+        text: "Hello Wine Aficiandos! There is a new wine posted: #{wine.maker} #{wine.name} #{wine.year}. \n See more at tastings.info",
+        html: wine_info_html
+      ))
     end
   end
 
@@ -301,4 +334,16 @@ get '/tags/:tag' do
 
 
   content = tag_info + wines_by_tag
+
+  render_full(content)
+end
+
+# subscribe
+
+post '/subscribe' do
+  if Subscriber.find_by( email: params[:email] ) == nil
+    new_subscriber = Subscriber.create( email: params[:email] )
+  end
+
+  redirect back, 303, "Success!"
 end
