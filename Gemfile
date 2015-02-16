@@ -29,6 +29,11 @@ gem 'bcrypt', '~> 3.1.7'
 # Use Devise as an authentication solution
 gem 'devise'
 
+# Use Omni-Auth
+gem 'omniauth'
+gem 'omniauth-twitter'
+gem 'omniauth-facebook'
+
 # Use Unicorn as the app server
 # gem 'unicorn'
 
