@@ -1,0 +1,12 @@
+<main>
+  <div id='<%= @product["Id"] %>' class='product-info'>
+    <% if @product["Labels"][1]["Url"] %>
+      <p> <img src='<%= @product["Labels"][1]["Url"] %>' /> </p>
+    <% else %>
+      <p> <img src='<%= @product["Labels"][0]["Url"] %>' /> </p>
+    <% end %>
+    <p> <%= @product["Name"] %> </p>
+    <p> <%= @product["Vineyard"]["Name"] %> </p>
+    <p> <%= @product["Varietal"]["Name"] %> </p>
+  </div>
+</main>

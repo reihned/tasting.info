@@ -1,10 +1,10 @@
-<div>
+<main>
   <%= form_tag("/wines", method: "post") do %>
     <%= label_tag(:query, "Search for Wines: ") %>
     <%= text_field_tag(:query) %>
     <%= submit_tag("Search") %>
   <% end %>
-  <div id="accreditation">
+  <div class="accreditation">
     Powered By:
     <a href="http://www.wine.com/" title="Wine.com the destination for Wine and Wine Gifts"><img src="http://cache.wine.com/images/logos/80x20_winecom_logo.png" alt="Wine.com the destination for Wine and Wine Gifts" /></a>
   </div>
@@ -20,4 +20,4 @@
     </div>
   <!-- <% end %> -->
 
-</div>
+</main>
