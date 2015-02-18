@@ -10,12 +10,13 @@ class ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :edit, :update, :destroy, :create]
 
   def index
-    #get
+    #get dashboard
     @reviews = Review.all
   end
 
   def create
     #post
+    review = Review.new
   end
 
   def edit
