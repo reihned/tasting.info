@@ -8,16 +8,16 @@
     Powered By:
     <a href="http://www.wine.com/" title="Wine.com the destination for Wine and Wine Gifts"><img src="http://cache.wine.com/images/logos/80x20_winecom_logo.png" alt="Wine.com the destination for Wine and Wine Gifts" /></a>
   </div>
-  <% if @results %>
+  <!-- <% if @results %> -->
     <div id="results">
       <% @results.each do |result| %>
-        <a href='/wines/<%= result.Id %>'>
+        <a href='/wines/<%= result["Id"] %>'>
           <article>
-            <p>result.Name</p>
+            <p><%= result["Name"] %></p>
           </article>
         </a>
       <% end %>
     </div>
-  <% end %>
+  <!-- <% end %> -->
 
 </div>

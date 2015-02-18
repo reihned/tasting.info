@@ -12,14 +12,14 @@ module WineApi
     def search(search_raw)
       # sanitize the search string
       search_string = search_raw.scan(/[\s\w]/).join("")
-      search_string = search_string.gsub(" ", "%20")
+      # search_string = search_string.gsub(" ", "%20")
 
       # add the search string
       query = @options
       query[:query].merge!({"search" => search_string})
 
       # API request, execting json response
-      response = self.class.get("/beta2/service.svc/JSON/catalog", query)
+      response = self.class.get("/api/beta2/service.svc/JSON/catalog", query)
 
       # Only return what's needed, an array of results
       return response["Products"]["List"]
@@ -31,7 +31,7 @@ module WineApi
       query[:query] << {"product" => product_id}
 
       # API request, execting json response
-      self.class.get("/beta2/service.svc/JSON/catalog", query)
+      self.class.get("/api/beta2/service.svc/JSON/catalog", query)
     end
   end
 end
