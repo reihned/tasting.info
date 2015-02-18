@@ -6,7 +6,7 @@ module WineApi
     base_uri 'services.wine.com'
 
     def initialize()
-      @options = { query: {apikey: ENV["WINE_API_KEY"]} }
+      @options = { query: {"apikey" => ENV["WINE_API_KEY"]} }
     end
 
     def search(search_raw)
@@ -16,7 +16,7 @@ module WineApi
 
       # add the search string
       query = @options
-      query[:query].merge!({search: search_string})
+      query[:query].merge!({"search" => search_string})
 
       # API request, execting json response
       response = self.class.get("/beta2/service.svc/JSON/catalog?", query)
