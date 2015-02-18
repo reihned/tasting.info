@@ -19,7 +19,7 @@ module WineApi
       query[:query].merge!({"search" => search_string})
 
       # API request, execting json response
-      response = self.class.get("/beta2/service.svc/JSON/catalog?", query)
+      response = self.class.get("/beta2/service.svc/JSON/catalog", query)
 
       # Only return what's needed, an array of results
       return response["Products"]["List"]
@@ -31,7 +31,7 @@ module WineApi
       query[:query] << {"product" => product_id}
 
       # API request, execting json response
-      self.class.get("/beta2/service.svc/JSON/catalog?", query)
+      self.class.get("/beta2/service.svc/JSON/catalog", query)
     end
   end
 end
