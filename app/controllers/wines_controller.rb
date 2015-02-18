@@ -18,7 +18,8 @@ class WinesController < ApplicationController
 
   def show
     # each wine page
-
+    catalog = WineCatalog.new
+    @product = catalog.id(params[:id])
   end
 
 end

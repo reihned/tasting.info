@@ -11,9 +11,9 @@
 // about supported directives.
 //
 //= require jquery2
-//= require turbolinks
-//= require underscore-min
-//= require backbone-min
-//= require jsx-transformer-min.js
-//= require react-min.js
+// = require turbolinks
+// = require underscore-min
+// = require backbone-min
+// = require jsx-transformer-min.js
+// = require react-min.js
 //= require_tree .
