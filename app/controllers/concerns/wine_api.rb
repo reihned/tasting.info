@@ -28,10 +28,12 @@ module WineApi
     def id(product_id)
       # add the product id
       query = @options
-      query[:query] << {"product" => product_id}
+      query[:query].merge!({"product" => product_id})
 
       # API request, execting json response
-      self.class.get("/api/beta2/service.svc/JSON/catalog", query)
+      response = self.class.get("/api/beta2/service.svc/JSON/catalog", query)
+
+      return response["Products"]["List"][0]
     end
   end
 end
