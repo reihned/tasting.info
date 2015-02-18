@@ -38,4 +38,22 @@ Rails.application.configure do
 
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
+
+    # General Settings
+  config.app_domain = 'tastings.info'
+
+  # Email
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.default_url_options = { host: config.app_domain }
+  # config.action_mailer.smtp_settings = {
+  #   address: 'smtp',
+  #   port: '587',
+  #   enable_starttls_auto: true,
+  #   user_name: 'user',
+  #   password: 'pass',
+  #   authentication: :plain,
+  #   domain: 'domain.com'
+  # }
+
 end
