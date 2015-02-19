@@ -1,0 +1,13 @@
+Thu, 19 Feb 2015 17:43:48 -0500
+README.rdoc	Fri, 13 Feb 2015 11:12:41 -0500
+app/controllers/application_controller.rb	Thu, 19 Feb 2015 14:59:05 -0500
+app/controllers/concerns/wine_api.rb	Wed, 18 Feb 2015 14:20:57 -0500
+app/controllers/omniauth_callbacks_controller.rb	Wed, 18 Feb 2015 10:20:11 -0500
+app/controllers/reviews_controller.rb	Thu, 19 Feb 2015 15:48:56 -0500
+app/controllers/users_controller.rb	Wed, 18 Feb 2015 10:20:11 -0500
+app/controllers/wines_controller.rb	Thu, 19 Feb 2015 11:59:16 -0500
+app/helpers/application_helper.rb	Fri, 13 Feb 2015 11:12:50 -0500
+app/models/identity.rb	Wed, 18 Feb 2015 10:20:11 -0500
+app/models/review.rb	Thu, 19 Feb 2015 09:56:19 -0500
+app/models/user.rb	Wed, 18 Feb 2015 17:58:25 -0500
+app/models/vote.rb	Wed, 18 Feb 2015 16:03:15 -0500

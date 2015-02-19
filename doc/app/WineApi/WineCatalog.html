@@ -1,0 +1,261 @@
+<!DOCTYPE html>
+
+<html>
+<head>
+<meta charset="utf-8">
+
+<title>class WineApi::WineCatalog - Rails Application Documentation</title>
+
+<script type="text/javascript">
+  var rdoc_rel_prefix = "../";
+</script>
+
+<script src="../js/jquery.js"></script>
+<script src="../js/darkfish.js"></script>
+
+<link href="../css/fonts.css" rel="stylesheet">
+<link href="../css/rdoc.css" rel="stylesheet">
+
+
+
+<body id="top" role="document" class="class">
+<nav role="navigation">
+  <div id="project-navigation">
+    <div id="home-section" role="region" title="Quick navigation" class="nav-section">
+  <h2>
+    <a href="../index.html" rel="home">Home</a>
+  </h2>
+
+  <div id="table-of-contents-navigation">
+    <a href="../table_of_contents.html#pages">Pages</a>
+    <a href="../table_of_contents.html#classes">Classes</a>
+    <a href="../table_of_contents.html#methods">Methods</a>
+  </div>
+</div>
+
+    <div id="search-section" role="search" class="project-section initially-hidden">
+  <form action="#" method="get" accept-charset="utf-8">
+    <div id="search-field-wrapper">
+      <input id="search-field" role="combobox" aria-label="Search"
+             aria-autocomplete="list" aria-controls="search-results"
+             type="text" name="search" placeholder="Search" spellcheck="false"
+             title="Type to search, Up and Down to navigate, Enter to load">
+    </div>
+
+    <ul id="search-results" aria-label="Search Results"
+        aria-busy="false" aria-expanded="false"
+        aria-atomic="false" class="initially-hidden"></ul>
+  </form>
+</div>
+
+  </div>
+
+  
+
+  <div id="class-metadata">
+    
+    <div id="parent-class-section" class="nav-section">
+  <h3>Parent</h3>
+
+  
+  <p class="link">Object
+  
+</div>
+
+    <div id="includes-section" class="nav-section">
+  <h3>Included Modules</h3>
+
+  <ul class="link-list">
+  
+  
+    <li><span class="include">HTTParty</span>
+  
+  
+  </ul>
+</div>
+
+    
+    <!-- Method Quickref -->
+<div id="method-list-section" class="nav-section">
+  <h3>Methods</h3>
+
+  <ul class="link-list" role="directory">
+    
+    <li ><a href="#method-c-new">::new</a>
+    
+    <li ><a href="#method-i-id">#id</a>
+    
+    <li ><a href="#method-i-search">#search</a>
+    
+  </ul>
+</div>
+
+  </div>
+</nav>
+
+<main role="main" aria-labelledby="class-WineApi::WineCatalog">
+  <h1 id="class-WineApi::WineCatalog" class="class">
+    class WineApi::WineCatalog
+  </h1>
+
+  <section class="description">
+    
+  </section>
+
+  
+  
+  
+  <section id="5Buntitled-5D" class="documentation-section">
+    
+
+    
+
+    
+
+    
+
+    
+     <section id="public-class-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Class Methods</h3>
+       </header>
+
+    
+      <div id="method-c-new" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">new</span><span
+            class="method-args">()</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="new-source">
+            <pre><span class="ruby-comment"># File app/controllers/concerns/wine_api.rb, line 8</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">initialize</span>()
+  <span class="ruby-ivar">@options</span> = { <span class="ruby-identifier">query</span><span class="ruby-operator">:</span> {<span class="ruby-string">&quot;apikey&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-constant">ENV</span>[<span class="ruby-string">&quot;WINE_API_KEY&quot;</span>]} }
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+     <section id="public-instance-5Buntitled-5D-method-details" class="method-section">
+       <header>
+         <h3>Public Instance Methods</h3>
+       </header>
+
+    
+      <div id="method-i-id" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">id</span><span
+            class="method-args">(product_id)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="id-source">
+            <pre><span class="ruby-comment"># File app/controllers/concerns/wine_api.rb, line 28</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">id</span>(<span class="ruby-identifier">product_id</span>)
+  <span class="ruby-comment"># add the product id</span>
+  <span class="ruby-identifier">query</span> = <span class="ruby-ivar">@options</span>
+  <span class="ruby-identifier">query</span>[<span class="ruby-value">:query</span>].<span class="ruby-identifier">merge!</span>({<span class="ruby-string">&quot;product&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">product_id</span>})
+
+  <span class="ruby-comment"># API request, execting json response</span>
+  <span class="ruby-identifier">response</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&quot;/api/beta2/service.svc/JSON/catalog&quot;</span>, <span class="ruby-identifier">query</span>)
+
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">response</span>[<span class="ruby-string">&quot;Products&quot;</span>][<span class="ruby-string">&quot;List&quot;</span>][<span class="ruby-value">0</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+      <div id="method-i-search" class="method-detail ">
+        
+        <div class="method-heading">
+          <span class="method-name">search</span><span
+            class="method-args">(search_raw)</span>
+          
+          <span class="method-click-advice">click to toggle source</span>
+          
+        </div>
+        
+
+        <div class="method-description">
+          
+          
+          
+          
+
+          
+          <div class="method-source-code" id="search-source">
+            <pre><span class="ruby-comment"># File app/controllers/concerns/wine_api.rb, line 12</span>
+<span class="ruby-keyword">def</span> <span class="ruby-identifier">search</span>(<span class="ruby-identifier">search_raw</span>)
+  <span class="ruby-comment"># sanitize the search string</span>
+  <span class="ruby-identifier">search_string</span> = <span class="ruby-identifier">search_raw</span>.<span class="ruby-identifier">scan</span>(<span class="ruby-regexp">/[\s\w]/</span>).<span class="ruby-identifier">join</span>(<span class="ruby-string">&quot;&quot;</span>)
+  <span class="ruby-comment"># search_string = search_string.gsub(&quot; &quot;, &quot;%20&quot;)</span>
+
+  <span class="ruby-comment"># add the search string</span>
+  <span class="ruby-identifier">query</span> = <span class="ruby-ivar">@options</span>
+  <span class="ruby-identifier">query</span>[<span class="ruby-value">:query</span>].<span class="ruby-identifier">merge!</span>({<span class="ruby-string">&quot;search&quot;</span> =<span class="ruby-operator">&gt;</span> <span class="ruby-identifier">search_string</span>})
+
+  <span class="ruby-comment"># API request, execting json response</span>
+  <span class="ruby-identifier">response</span> = <span class="ruby-keyword">self</span>.<span class="ruby-identifier">class</span>.<span class="ruby-identifier">get</span>(<span class="ruby-string">&quot;/api/beta2/service.svc/JSON/catalog&quot;</span>, <span class="ruby-identifier">query</span>)
+
+  <span class="ruby-comment"># Only return what&#39;s needed, an array of results</span>
+  <span class="ruby-keyword">return</span> <span class="ruby-identifier">response</span>[<span class="ruby-string">&quot;Products&quot;</span>][<span class="ruby-string">&quot;List&quot;</span>]
+<span class="ruby-keyword">end</span></pre>
+          </div>
+          
+        </div>
+
+        
+
+        
+      </div>
+
+    
+    </section>
+  
+  </section>
+</main>
+
+
+<footer id="validator-badges" role="contentinfo">
+  <p><a href="http://validator.w3.org/check/referer">Validate</a>
+  <p>Generated by <a href="http://docs.seattlerb.org/rdoc/">RDoc</a> 4.2.0.
+  <p>Based on <a href="http://deveiate.org/projects/Darkfish-RDoc/">Darkfish</a> by <a href="http://deveiate.org">Michael Granger</a>.
+</footer>
+
