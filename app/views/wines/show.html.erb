@@ -1,4 +1,7 @@
 <main>
   <%= render 'application/product' %>
   <%= render 'application/accreditiation' %>
+  <% if user_signed_in? %>
+    <%= render 'application/reviewform' %>
+  <% end %>
 </main>

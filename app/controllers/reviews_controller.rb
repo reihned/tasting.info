@@ -8,6 +8,7 @@
 
 class ReviewsController < ApplicationController
   before_action :authenticate_user!, only: [:index, :edit, :update, :destroy, :create]
+  include WineApi
 
   def index
     #get dashboard
@@ -15,28 +16,43 @@ class ReviewsController < ApplicationController
   end
 
   def create
-    #post
+    #post a review, form from the wine info
     review = Review.new
+    review.user_id = current_user.id
+    review.product_id = params[:product_id]
+    review.content = params[:content]
+
+    if params[:positive]
+      review.positive = eval(params[:positive])[:checked]
+    else
+      review.positive = false
+    end
+
+    review.save
+
+    redirect_to :back
   end
 
   def edit
-    #get
-    @review = Review.find_by(params[:id])
+    #get edit form for review
+    @review = Review.find_by({id: params[:id]})
   end
 
   def show
-    #get
-    @review = Review.find_by(params[:id])
+    #get individual reviews
+    @review = Review.find_by({id: params[:id]})
+    catalog = WineCatalog.new
+    @product = catalog.id(@review.product_id)
   end
 
   def update
-    #put/patch
-    review = Review.find_by(params[:id])
+    #put/patch the review
+    review = Review.find_by({id: params[:id]})
   end
 
   def destroy
-    #delete
-    review = Review.find_by(params[:id])
+    #delete the review
+    review = Review.find_by({id: params[:id]})
   end
 
 end

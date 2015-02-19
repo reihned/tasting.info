@@ -1,6 +1,8 @@
 Rails.application.routes.draw do
   devise_for :users , :controllers => { omniauth_callbacks: 'omniauth_callbacks' }
 
+  root 'application#welcome'
+
   match '/users/:id/finish_signup' => 'users#finish_signup', via: [:get, :patch], :as => :finish_signup
 
   resources :wines, only: [ :index, :create, :show ]
