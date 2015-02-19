@@ -1,0 +1,19 @@
+<%= form_tag("/reviews", method: "post") do %>
+  <h4> Post a review </h4>
+  <% if @product %>
+    <input type="hidden" name="product_id" value="<%= @product["Id"] %>" />
+  <% end %>
+  <p>
+    <%= label_tag(:content, "Review: ") %>
+  <p>
+  </p>
+    <%= text_area_tag(:content) %>
+  </p>
+  <p>
+    <%= label_tag(:positive, "Positive? ") %>
+    <%= check_box_tag(:positive, checked: true) %>
+  </p>
+  <p>
+    <%= submit_tag("Submit") %>
+  </p>
+<% end %>

@@ -10,10 +10,10 @@
 // Read Sprockets README (https://github.com/sstephenson/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery2
+// = require jquery2
 // = require turbolinks
 // = require underscore-min
 // = require backbone-min
 // = require jsx-transformer-min.js
 // = require react-min.js
-//= require_tree .
+// = require_tree .

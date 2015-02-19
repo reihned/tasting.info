@@ -1,0 +1,8 @@
+<main>
+  <%= link_to('Search for Wines', { controller: "wines", action: "index"} )  %>
+  <% if @reviews %>
+    <% @reviews.each do |review| %>
+      <%= render 'application/review', review: review %>
+    <% end %>
+  <% end %>
+</main>
