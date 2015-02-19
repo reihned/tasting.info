@@ -11,6 +11,7 @@
 // about supported directives.
 //
 // = require jquery2
+// = require jquery_ujs
 // = require turbolinks
 // = require underscore-min
 // = require backbone-min
