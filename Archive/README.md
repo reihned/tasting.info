@@ -1,17 +1,7 @@
-tastings.info
+tasting.info
 A website for posting wines, makers, and reviews.
-
-GEMS
-gem 'activerecord'
-gem 'sinatra'
-gem 'mustache'
-gem 'pg'
-gem 'sendgrid-ruby'
-gem 'thin'
-
-INSTRUCTIONS
 
 TRELLO
 https://trello.com/b/hcF4McuM/tastings-info
 
-See it live at http://tastings.info (when it's working)
+See it live at http://tasting.info (when it's working)
