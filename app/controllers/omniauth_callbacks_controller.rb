@@ -1,4 +1,7 @@
 class OmniauthCallbacksController < Devise::OmniauthCallbacksController
+  # user_omniauth_authorize GET|POST  /users/auth/:provider(.:format)        omniauth_callbacks#passthru {:provider=>/facebook|twitter/}
+  # user_omniauth_callback  GET|POST  /users/auth/:action/callback(.:format) omniauth_callbacks#:action
+
   def self.provides_callback_for(provider)
     class_eval %Q{
       def #{provider}
@@ -20,11 +23,10 @@ class OmniauthCallbacksController < Devise::OmniauthCallbacksController
   end
 
   def after_sign_in_path_for(resource)
-    finish_signup_path(resource)
-    # if resource.email_verified?
-    #   super resource
-    # else
-    #   finish_signup_path(resource)
-    # end
+    if resource.email_verified?
+      super resource
+    else
+      finish_signup_path(resource)
+    end
   end
 end
