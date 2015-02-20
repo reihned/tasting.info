@@ -30,9 +30,6 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'unicorn'
 gem 'unicorn-rails'
 
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
 # Devise and Omni-auth
 gem 'devise'
 gem 'omniauth'
