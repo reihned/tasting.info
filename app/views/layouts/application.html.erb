@@ -7,12 +7,15 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
-  <nav>
-    <a href='/'>Home</a>
-    <%= render 'application/signinup' %>
-  </nav>
+  <div class="container">
+    <nav class="row">
+      <a href='/' class='one-half column'>Home</a>
+      <div class="one-half column">
+        <%= render 'application/signinup' %>
+      </div>
+    </nav>
 
   <%= yield %>
-
+  </div>
 </body>
 </html>
