@@ -4,7 +4,7 @@ class User < ActiveRecord::Base
 
   # Include default devise modules. Others available are:
   # :lockable, :timeoutable
-  devise :database_authenticatable, :registerable # , :confirmable,
+  devise :database_authenticatable, :registerable, # :confirmable,
     :recoverable, :rememberable, :trackable, :validatable # , :omniauthable
 
   validates_format_of :email, :without => TEMP_EMAIL_REGEX, on: :update
@@ -19,7 +19,7 @@ class User < ActiveRecord::Base
   #   # Note that this may leave zombie accounts (with no associated identity) which
   #   # can be cleaned up at a later date.
   #   user = signed_in_resource ? signed_in_resource : identity.user
-  # 
+  #
   #   # Create the user if needed
   #   if user.nil?
   #
@@ -49,8 +49,8 @@ class User < ActiveRecord::Base
     #   identity.save!
     # end
 
-    user
-  end
+  #   user
+  # end
 
   def email_verified?
     self.email && self.email !~ TEMP_EMAIL_REGEX
