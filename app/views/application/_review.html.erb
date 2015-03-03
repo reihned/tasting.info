@@ -2,13 +2,15 @@
 <!-- product_id product -->
 <!-- positive -->
 <!-- content -->
-<p>
-  <% if review.user.name %>
-    <%= review.user.name %>
-  <% else %>
-    <%= review.user.email.split('@')[0] %>
-  <% end %>
-</p>
-<p>
-  <%= review.content %>
-</p>
+<article class="four columns review">
+  <p>
+    <% if review.user.name %>
+      <%= review.user.name %>
+    <% else %>
+      <%= review.user.email.split('@')[0] %>
+    <% end %>
+  </p>
+  <p>
+    <%= review.content %>
+  </p>
+</article>

@@ -1,10 +1,12 @@
 <main>
   <%= link_to('Search for Wines', { controller: "wines", action: "index"} )  %>
-  <% if @reviews %>
-    <% @reviews.each do |review| %>
-      <a href='reviews/<%= review.id %>' >
-        <%= render 'application/review', review: review %>
-      </a>
+  <div class='row'>
+    <% if @reviews %>
+      <% @reviews.each do |review| %>
+        <a href='reviews/<%= review.id %>' >
+          <%= render 'application/review', review: review %>
+        </a>
+      <% end %>
     <% end %>
-  <% end %>
+  </div>
 </main>
