@@ -30,8 +30,10 @@ gem 'bcrypt', '~> 3.1.7'
 gem 'unicorn'
 gem 'unicorn-rails'
 
-# Devise and Omni-auth
+# Devise
 gem 'devise'
+
+# Omni-auth
 gem 'omniauth'
 gem 'omniauth-twitter'
 gem 'omniauth-facebook'
