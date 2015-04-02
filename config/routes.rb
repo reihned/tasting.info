@@ -7,7 +7,9 @@ Rails.application.routes.draw do
 
   resources :reviews, except: [ :new ]
 
-  resources :identities, only: [ :create ]
+  resources :identities, only: [ :new, :create, :show ]
+
+  get '/auth/:provider/callback', to: 'identities#create'
 
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".

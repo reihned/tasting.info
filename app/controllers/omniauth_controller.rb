@@ -1,3 +1,5 @@
+# depreciated? for reference to build own system.
+
 class OmniauthController < ApplicationController
   def self.provides_callback_for(provider)
     class_eval %Q{
