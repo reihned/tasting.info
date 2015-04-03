@@ -13,20 +13,33 @@ class IdentitiesController < ApplicationController
     # define the local user
     local_user = current_user
 
-    Identity.new({
-        uid:          local_user.id,
-        provider:     auth_hash["provider"],
-        provider_uid: auth_hash["uid"],
-        nickname:     auth_hash["info"]["nickcname"],
-        # should creditials be another table? id ho cred?
-        token:        auth_hash["credentials"]["token"],
-        secret:       auth_hash["credentials"]["secret"],
-        expires:      auth_hash["credentials"]["expires"],
-        expires_at:   auth_hash["credentials"]["expires_at"]
-      })
+    # Identity.new({
+    #     user_id:      local_user.id,
+    #     provider:     auth_hash["provider"],
+    #     uid:          auth_hash["uid"],
+    #     nickname:     auth_hash["info"]["nickcname"],
+    #     # should creditials be another table? id ho cred?
+    #     token:        auth_hash["credentials"]["token"],
+    #     secret:       auth_hash["credentials"]["secret"],
+    #     expires:      auth_hash["credentials"]["expires"],
+    #     expires_at:   auth_hash["credentials"]["expires_at"]
+    #   })
 
+    new_id = Identity.where(
+        :user_id  =>  local_user.id,
+        :provider =>  auth_hash["provider"],
+        :uid      =>  auth_hash["uid"],
+        :nickname =>  auth_hash["info"]["nickcname"]
+      ).first_or_create
 
-
+    if new_id # basic if to do authorization, replace this later
+      new_credential = Credential.create(auth_hash["credentials"])
+      new_id.credential = new_credential
+      new_id.save
+    else
+      # what is the best practice for raising an error? raise?
+      return "Error"
+    end
 
   end
 
